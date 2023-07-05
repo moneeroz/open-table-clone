@@ -32,7 +32,7 @@ const initialState = {
   setAuthState: () => {},
 };
 
-const AuthenticationContext = createContext<AuthState>(initialState);
+export const AuthenticationContext = createContext<AuthState>(initialState);
 
 const AuthContext = ({ children }: { children: ReactNode }) => {
   const [authState, setAuthState] = useState<State>(initialState);
