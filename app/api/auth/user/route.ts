@@ -28,7 +28,24 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
       },
     });
 
-    return NextResponse.json({ user }, { status: 200 });
+    if (!user) {
+      return NextResponse.json(
+        { errorMessage: "User not found" },
+        { status: 401 },
+      );
+    }
+
+    return NextResponse.json(
+      {
+        id: user.id,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        email: user.email,
+        city: user.city,
+        phone: user.phone,
+      },
+      { status: 200 },
+    );
   } catch (error) {
     console.error("An error occurred:", error);
     return NextResponse.json(
