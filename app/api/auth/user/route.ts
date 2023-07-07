@@ -8,11 +8,13 @@ const prisma = new PrismaClient();
 export const GET = async (req: NextRequest, res: NextResponse) => {
   try {
     const headersList = headers();
-    const bearer = headersList.get("authorization") as string;
+    const Bearer = req.headers.get("Authorization") as string;
+    // const bearer = headersList.get("Authorization") as string;
 
-    const token = bearer.split(" ")[1];
+    const token = Bearer.split(" ")[1];
 
     const payload = jwt.decode(token) as { email: string };
+    console.log(payload);
 
     const user = await prisma.user.findUnique({
       where: {
