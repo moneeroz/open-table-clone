@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import * as jose from "jose";
 
 export async function middleware(req: NextRequest) {
-  const bearer = req.headers.get("authorization");
+  const bearer = req.headers.get("Authorization");
 
   if (!bearer) {
     return NextResponse.json("Unauthorized request", { status: 401 });

@@ -1,10 +1,12 @@
 "use client";
 
+import useAuth from "@/hooks/useAuth";
 import {
   Dispatch,
   ReactNode,
   SetStateAction,
   createContext,
+  useEffect,
   useState,
 } from "react";
 
@@ -36,6 +38,13 @@ export const AuthenticationContext = createContext<AuthState>(initialState);
 
 const AuthContext = ({ children }: { children: ReactNode }) => {
   const [authState, setAuthState] = useState<State>(initialState);
+
+  const { fetchUser } = useAuth();
+  fetchUser();
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   return (
     <AuthenticationContext.Provider value={{ ...authState, setAuthState }}>

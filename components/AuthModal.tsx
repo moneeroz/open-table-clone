@@ -24,7 +24,7 @@ const AuthModal = ({ isSignin }: { isSignin: boolean }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { signin } = useAuth();
+  const { signin, signup } = useAuth();
   const { loading, data, error } = useContext(AuthenticationContext);
 
   const renderContent = (signinContent: string, signupContent: string) => {
@@ -77,6 +77,8 @@ const AuthModal = ({ isSignin }: { isSignin: boolean }) => {
   const handleClick = () => {
     if (isSignin) {
       signin({ email: inputs.email, password: inputs.password }, handleClose);
+    } else {
+      signup(inputs, handleClose);
     }
   };
 
@@ -116,6 +118,7 @@ const AuthModal = ({ isSignin }: { isSignin: boolean }) => {
               ) : null}
 
               <div className="uppercase font-bold text-center pb-2 border-b mb-2">
+                {data?.city}
                 <p className="text-sm">
                   {renderContent("Sign In", "Create Account")}
                 </p>
