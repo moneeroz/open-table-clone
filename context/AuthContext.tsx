@@ -1,6 +1,6 @@
 "use client";
 
-import useAuth from "@/hooks/useAuth";
+import { getCookie } from "cookies-next";
 import {
   Dispatch,
   ReactNode,
@@ -39,8 +39,45 @@ export const AuthenticationContext = createContext<AuthState>(initialState);
 const AuthContext = ({ children }: { children: ReactNode }) => {
   const [authState, setAuthState] = useState<State>(initialState);
 
-  const { fetchUser } = useAuth();
-  fetchUser();
+  const fetchUser = async () => {
+    setAuthState({
+      data: null,
+      error: null,
+      loading: true,
+    });
+    try {
+      const jwt = getCookie("jwt");
+
+      if (!jwt) {
+        return setAuthState({
+          data: null,
+          error: null,
+          loading: false,
+        });
+      }
+
+      const response = await fetch("http://localhost:3000/api/auth/user", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
+
+      const data = await response.json();
+
+      setAuthState({
+        data,
+        error: null,
+        loading: false,
+      });
+    } catch (error: any) {
+      setAuthState({
+        data: null,
+        error: error.response.data.errorMessage,
+        loading: false,
+      });
+    }
+  };
 
   useEffect(() => {
     fetchUser();

@@ -14,7 +14,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
     const token = Bearer.split(" ")[1];
 
     const payload = jwt.decode(token) as { email: string };
-    console.log(payload);
+    // console.log(payload);
 
     const user = await prisma.user.findUnique({
       where: {

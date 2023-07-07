@@ -1,5 +1,4 @@
 import { AuthenticationContext } from "@/context/AuthContext";
-import { cookies } from "next/dist/client/components/headers";
 import { useContext } from "react";
 
 const useAuth = () => {
@@ -126,50 +125,7 @@ const useAuth = () => {
     }
   };
 
-  const fetchUser = async () => {
-    setAuthState({
-      data: null,
-      error: null,
-      loading: true,
-    });
-    try {
-      const cookieStore = cookies();
-      const jwt = cookieStore.get("jwt");
-      console.log(jwt);
-
-      if (!jwt) {
-        return setAuthState({
-          data: null,
-          error: null,
-          loading: false,
-        });
-      }
-
-      const response = await fetch("http://localhost:3000/api/auth/user", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${jwt.value}`,
-        },
-      });
-
-      const data = await response.json();
-      console.log({ data });
-
-      setAuthState({
-        data: data,
-        error: null,
-        loading: false,
-      });
-    } catch (error: any) {
-      setAuthState({
-        data: null,
-        error: error,
-        loading: false,
-      });
-    }
-  };
-
-  return { signin, signup, fetchUser };
+  return { signin, signup };
 };
 
 export default useAuth;

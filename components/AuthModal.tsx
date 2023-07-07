@@ -118,7 +118,6 @@ const AuthModal = ({ isSignin }: { isSignin: boolean }) => {
               ) : null}
 
               <div className="uppercase font-bold text-center pb-2 border-b mb-2">
-                {data?.city}
                 <p className="text-sm">
                   {renderContent("Sign In", "Create Account")}
                 </p>
