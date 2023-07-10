@@ -1,10 +1,9 @@
 import { AuthenticationContext } from "@/context/AuthContext";
+import { deleteCookie, removeCookies } from "cookies-next";
 import { useContext } from "react";
 
 const useAuth = () => {
-  const { data, error, loading, setAuthState } = useContext(
-    AuthenticationContext,
-  );
+  const { setAuthState } = useContext(AuthenticationContext);
 
   const signin = async (
     {
@@ -41,9 +40,6 @@ const useAuth = () => {
         return;
       }
       const data = await response.json();
-      // const token = data.token;
-
-      // console.log(data);
 
       setAuthState({
         data: data,
@@ -125,7 +121,17 @@ const useAuth = () => {
     }
   };
 
-  return { signin, signup };
+  const signout = () => {
+    deleteCookie("jwt");
+
+    setAuthState({
+      data: null,
+      error: null,
+      loading: false,
+    });
+  };
+
+  return { signin, signup, signout };
 };
 
 export default useAuth;
