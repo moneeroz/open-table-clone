@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { times } from "@/data";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export const GET = async (req: NextRequest, res: NextResponse) => {
   const searchParams = new URLSearchParams(req.nextUrl.searchParams);
@@ -7,11 +10,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   const time = searchParams.get("time");
   const partySize = searchParams.get("partySize");
 
-  if (
-    !searchParams.has("day") ||
-    !searchParams.has("time") ||
-    !searchParams.has("partySize")
-  ) {
+  if (!day || !time || !partySize) {
     return NextResponse.json(
       { errorMessage: "invalid input provided" },
       { status: 400 },
@@ -27,5 +26,19 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
     );
   }
 
-  return NextResponse.json({ searchTimes }, { status: 200 });
+  const bookings = await prisma.booking.findMany({
+    where: {
+      booking_time: {
+        gte: new Date(`${day}T${searchTimes[0]}`),
+        lte: new Date(`${day}T${searchTimes[searchTimes.length - 1]}`),
+      },
+    },
+    select: {
+      booking_time: true,
+      number_of_people: true,
+      tables: true,
+    },
+  });
+  console.log(bookings);
+  return NextResponse.json({ searchTimes, bookings }, { status: 200 });
 };
