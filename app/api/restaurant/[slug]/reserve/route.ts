@@ -1,5 +1,6 @@
 import { findAvailableTables } from "@/services/restaurant/findAvailableTables";
 import { PrismaClient, Table } from "@prisma/client";
+import { sl } from "date-fns/locale";
 import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
@@ -11,12 +12,19 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   const partySize = searchParams.get("partySize");
   const slug = req.nextUrl.pathname.split("/")[3];
 
+  if (!day || !time || !partySize) {
+    return NextResponse.json(
+      { errorMessage: "invalid input provided" },
+      { status: 400 },
+    );
+  }
+
   const body = await req.json();
   const {
     bookerEmail,
     bookerPhone,
     bookerFirstName,
-    bookerlastName,
+    bookerLastName,
     bookerOccasion,
     bookerRequest,
   } = body;
@@ -63,6 +71,8 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
       { status: 400 },
     );
   }
+
+  console.log("searchTimesWithTables:", searchTimesWithTables);
 
   const searchTimeWithTables = searchTimesWithTables.find((t) => {
     return t.date.toISOString() === new Date(`${day}T${time}`).toISOString();
@@ -122,7 +132,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
       booker_email: bookerEmail,
       booker_phone: bookerPhone,
       booker_first_name: bookerFirstName,
-      booker_last_name: bookerlastName,
+      booker_last_name: bookerLastName,
       booker_occasion: bookerOccasion,
       booker_request: bookerRequest,
       restaurant_id: restaurant.id,
