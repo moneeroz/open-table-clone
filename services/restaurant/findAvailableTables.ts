@@ -1,5 +1,5 @@
 import { times } from "@/data";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Table } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
@@ -7,11 +7,15 @@ const prisma = new PrismaClient();
 export const findAvailableTables = async ({
   time,
   day,
-  slug,
+  restaurant,
 }: {
   time: string;
   day: string;
-  slug: string;
+  restaurant: {
+    tables: Table[];
+    open_time: string;
+    close_time: string;
+  };
 }) => {
   const searchTimes = times.find((t) => t.time === time)?.searchTimes;
 
@@ -49,24 +53,6 @@ export const findAvailableTables = async ({
       {},
     );
   });
-
-  const restaurant = await prisma.restaurant.findUnique({
-    where: {
-      slug,
-    },
-    select: {
-      tables: true,
-      open_time: true,
-      close_time: true,
-    },
-  });
-
-  if (!restaurant) {
-    return NextResponse.json(
-      { errorMessage: "invalid time provided" },
-      { status: 400 },
-    );
-  }
 
   const tables = restaurant.tables;
 
