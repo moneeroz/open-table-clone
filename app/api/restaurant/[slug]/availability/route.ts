@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { times } from "@/data";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Table } from "@prisma/client";
+import { findAvailableTables } from "@/services/restaurant/findAvailableTables";
 
 const prisma = new PrismaClient();
 
@@ -17,43 +17,6 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
       { status: 400 },
     );
   }
-
-  const searchTimes = times.find((t) => t.time === time)?.searchTimes;
-
-  if (!searchTimes) {
-    return NextResponse.json(
-      { errorMessage: "invalid time provided" },
-      { status: 400 },
-    );
-  }
-
-  const bookings = await prisma.booking.findMany({
-    where: {
-      booking_time: {
-        gte: new Date(`${day}T${searchTimes[0]}`),
-        lte: new Date(`${day}T${searchTimes[searchTimes.length - 1]}`),
-      },
-    },
-    select: {
-      booking_time: true,
-      number_of_people: true,
-      tables: true,
-    },
-  });
-
-  const bookingTableObj: { [key: string]: { [key: number]: true } } = {};
-
-  bookings.forEach((booking) => {
-    bookingTableObj[booking.booking_time.toISOString()] = booking.tables.reduce(
-      (obj, table) => {
-        return {
-          ...obj,
-          [table.table_id]: true,
-        };
-      },
-      {},
-    );
-  });
 
   const restaurant = await prisma.restaurant.findUnique({
     where: {
@@ -73,27 +36,22 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
     );
   }
 
-  const tables = restaurant.tables;
+  const searchTimesWithTables = (await findAvailableTables({
+    time,
+    day,
+    restaurant,
+  })) as {
+    date: Date;
+    time: string;
+    tables: Table[];
+  }[];
 
-  const searchTimesWithTables = searchTimes.map((searchTime) => {
-    return {
-      date: new Date(`${day}T${searchTime}`),
-      time: searchTime,
-      tables,
-    };
-  });
-
-  searchTimesWithTables.forEach((searchTime) => {
-    searchTime.tables = searchTime.tables.filter((table) => {
-      if (
-        bookingTableObj[searchTime.date.toISOString()] &&
-        bookingTableObj[searchTime.date.toISOString()][table.id]
-      ) {
-        return false;
-      }
-      return true;
-    });
-  });
+  if (!searchTimesWithTables) {
+    return NextResponse.json(
+      { errorMessage: "invalid data provided" },
+      { status: 400 },
+    );
+  }
 
   const availableTimes = searchTimesWithTables
     .map((searchTime) => {
