@@ -1,5 +1,5 @@
 import { AuthenticationContext } from "@/context/AuthContext";
-import { deleteCookie, removeCookies } from "cookies-next";
+import { deleteCookie } from "cookies-next";
 import { useContext } from "react";
 
 const useAuth = () => {
