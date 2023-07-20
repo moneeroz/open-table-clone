@@ -23,7 +23,7 @@ const ReservationCard = ({
   const [partySize, setPartySize] = useState(1);
   const [day, setDay] = useState(new Date().toISOString().split("T")[0]);
 
-  console.log(data);
+  // console.log(data);
 
   const handleDateChange = (date: Date | null) => {
     if (!date) {

@@ -72,7 +72,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     );
   }
 
-  console.log("searchTimesWithTables:", searchTimesWithTables);
+  // console.log("searchTimesWithTables:", searchTimesWithTables);
 
   const searchTimeWithTables = searchTimesWithTables.find((t) => {
     return t.date.toISOString() === new Date(`${day}T${time}`).toISOString();

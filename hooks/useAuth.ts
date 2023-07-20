@@ -102,7 +102,7 @@ const useAuth = () => {
       }
       const data = await response.json();
 
-      console.log(data);
+      // console.log(data);
 
       setAuthState({
         data: data,
