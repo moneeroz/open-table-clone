@@ -43,7 +43,7 @@ const SearchSideBar = async ({
               },
             }}
             className="font-light text-reg capitalize"
-            key={location.id}
+            key={location?.id}
           >
             {location.name}
           </Link>
@@ -62,7 +62,7 @@ const SearchSideBar = async ({
               },
             }}
             className="font-light text-reg capitalize"
-            key={cuisine.id}
+            key={cuisine?.id}
           >
             {cuisine.name}
           </Link>
@@ -81,6 +81,7 @@ const SearchSideBar = async ({
                 },
               }}
               className={className}
+              key={label}
             >
               {label}
             </Link>

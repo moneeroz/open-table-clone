@@ -6,7 +6,7 @@ const Images = ({ images }: { images: string[] }) => {
       </h1>
       <div className="flex flex-wrap">
         {images?.map((image) => (
-          <img className="w-56 h-44 mr-1 mb-1" src={image} alt="" />
+          <img key={image} className="w-56 h-44 mr-1 mb-1" src={image} alt="" />
         ))}
       </div>
     </div>

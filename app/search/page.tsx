@@ -82,7 +82,7 @@ const Search = async ({ searchParams }: { searchParams: SearchParams }) => {
           {restaurants.length ? (
             <>
               {restaurants.map((restaurant) => (
-                <RestaurantCard restaurant={restaurant} key={restaurant.id} />
+                <RestaurantCard restaurant={restaurant} key={restaurant?.id} />
               ))}
             </>
           ) : (
