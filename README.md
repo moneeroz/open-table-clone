@@ -4,6 +4,8 @@ This project is a clone of [openTable](https://www.opentable.ca/) where you can 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+Preview Live site [Here](https://open-table-clone-5s8kbumxq-moneeroz.vercel.app/)
+
 ## Getting Started
 
 1. install dependencies
