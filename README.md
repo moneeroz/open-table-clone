@@ -15,9 +15,9 @@ npm install
 2. You will find a .env.example in the root directory.
 
 - Rename .env.example to .env
-- Generate your database credintials (any sql db) and JWT secret and add them to the .env
+- Generate your POSTGRES database credintials and JWT secret and add them to the .env
 
-3. run the development server:
+1. run the development server:
 
 ```bash
 npm run dev
