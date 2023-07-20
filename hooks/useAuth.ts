@@ -101,7 +101,6 @@ const useAuth = () => {
         return;
       }
       const data = await response.json();
-      // const token = data.token;
 
       console.log(data);
 

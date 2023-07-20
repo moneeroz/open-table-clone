@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { headers } from "next/dist/client/components/headers";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
@@ -7,14 +6,11 @@ const prisma = new PrismaClient();
 
 export const GET = async (req: NextRequest, res: NextResponse) => {
   try {
-    const headersList = headers();
     const Bearer = req.headers.get("Authorization") as string;
-    // const bearer = headersList.get("Authorization") as string;
 
     const token = Bearer.split(" ")[1];
 
     const payload = jwt.decode(token) as { email: string };
-    // console.log(payload);
 
     const user = await prisma.user.findUnique({
       where: {

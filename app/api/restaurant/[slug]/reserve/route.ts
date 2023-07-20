@@ -1,6 +1,6 @@
 import { findAvailableTables } from "@/services/restaurant/findAvailableTables";
 import { PrismaClient, Table } from "@prisma/client";
-import { sl } from "date-fns/locale";
+
 import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();

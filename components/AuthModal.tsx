@@ -68,10 +68,6 @@ const AuthModal = ({ isSignin }: { isSignin: boolean }) => {
     }
 
     setDisabled(true);
-
-    return () => {
-      // second;
-    };
   }, [inputs]);
 
   const handleClick = () => {
