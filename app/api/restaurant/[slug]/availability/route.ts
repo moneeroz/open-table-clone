@@ -4,6 +4,8 @@ import { findAvailableTables } from "@/services/restaurant/findAvailableTables";
 
 const prisma = new PrismaClient();
 
+export const dynamic = "force-dynamic";
+
 export const GET = async (req: NextRequest, res: NextResponse) => {
   const searchParams = new URLSearchParams(req.nextUrl.searchParams);
   const day = searchParams.get("day");
