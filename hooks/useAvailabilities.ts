@@ -22,7 +22,7 @@ const useAvailabilities = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/restaurant/${slug}/availability?day=${day}&time=${time}&partySize=${partySize}`,
+        `/api/restaurant/${slug}/availability?day=${day}&time=${time}&partySize=${partySize}`,
         {
           method: "GET",
         },

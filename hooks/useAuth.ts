@@ -22,7 +22,7 @@ const useAuth = () => {
     });
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/signin", {
+      const response = await fetch("/api/auth/signin", {
         method: "POST",
         body: JSON.stringify({ email, password }),
       });
@@ -76,7 +76,7 @@ const useAuth = () => {
     handleClose: () => void,
   ) => {
     try {
-      const response = await fetch("http://localhost:3000/api/auth/signup", {
+      const response = await fetch("/api/auth/signup", {
         method: "POST",
         body: JSON.stringify({
           firstName,

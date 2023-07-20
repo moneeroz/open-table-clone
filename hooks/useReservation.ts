@@ -33,7 +33,7 @@ const useReservation = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/restaurant/${slug}/reserve?day=${day}&time=${time}&partySize=${partySize}`,
+        `/api/restaurant/${slug}/reserve?day=${day}&time=${time}&partySize=${partySize}`,
         {
           method: "POST",
           body: JSON.stringify({
