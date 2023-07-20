@@ -69,9 +69,7 @@ const ReservationCard = ({
       <div className="my-3 flex flex-col">
         <label htmlFor="">Party size</label>
         <select
-          name=""
           className="py-3 border-b font-light bg-transparent"
-          id=""
           value={partySize}
           onChange={(e) => setPartySize(Number(e.target.value))}
         >
@@ -96,8 +94,6 @@ const ReservationCard = ({
         <div className="flex flex-col w-[48%]">
           <label htmlFor="">Time</label>
           <select
-            name=""
-            id=""
             className="py-[14.3px] border-b font-light bg-transparent"
             value={time}
             onChange={(e) => setTime(e.target.value)}
