@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 import AuthContext from "@/context/AuthContext";
 import "react-datepicker/dist/react-datepicker.css";
 
+export const dynamic = "force-dynamic";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
