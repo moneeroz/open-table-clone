@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 
+export const dynamic = "force-dynamic";
+
 export const GET = async (req: NextRequest, res: NextResponse) => {
   try {
     const Bearer = req.headers.get("Authorization") as string;
